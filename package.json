@@ -9,6 +9,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jameslaneconkling/falcor-provider"
+  },
   "keywords": [
     "falcor",
     "redux",
@@ -16,6 +20,9 @@
   ],
   "author": "jameslaneconkling",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jameslaneconkling/falcor-provider/issues"
+  },
   "dependencies": {
     "hoist-non-react-statics": "^1.2.0",
     "ramda": "^0.22.1",
