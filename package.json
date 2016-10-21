@@ -1,0 +1,19 @@
+{
+  "name": "falcor-provider",
+  "version": "0.0.1",
+  "description": "Redux provider to connect your falcor graph to your redux store",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "falcor",
+    "redux",
+    "provider"
+  ],
+  "author": "jameslaneconkling",
+  "license": "ISC"
+}
