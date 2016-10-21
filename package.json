@@ -15,5 +15,10 @@
     "provider"
   ],
   "author": "jameslaneconkling",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "hoist-non-react-statics": "^1.2.0",
+    "ramda": "^0.22.1",
+    "react": "^15.3.2"
+  }
 }
