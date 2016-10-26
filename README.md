@@ -128,10 +128,10 @@ Falcor Provider tracks the shape of the app's falcor graph by collapsing all pat
 This collapsed list of pathSets is stored in the redux store under the `falcor.paths` keys, and is updated internally via the `falcor-provider/UPDATE_PATHS` action.  This makes retrieving the graph's current expanded state as easy as:
 
 ```javascript
-falcor.get(store.getState().falcor.props);
+falcor.get(store.getState().falcor.paths);
 ```
 
-The Falcor Provider connect function injects a `paths` property that is equal to the component's current paths value, and an `updatePaths()` function update the value.  Together these can update the shape of the app's graph, for example to paginate a list.
+The Falcor Provider connect function injects the `paths` property and an `updatePaths()` function.  Together these can modify the shape of the app's graph, for example to paginate a list.
 
 ```javascript
 paginateList() {
