@@ -11,9 +11,9 @@ npm install --save falcor-provider
 
 Redux Provider follows a very similar pattern to Redux, using [Provider](//github.com/jameslaneconkling/falcor-provider/blob/master/src/components/provider.js) and [connect](//github.com/jameslaneconkling/falcor-provider/commit/24193313026c52acf6742ddbe2b69c53de361198) higher order components to connect components to the Falcor cache, and Falcor to the Redux store.
 
-To use,
+**To use**
 
-* wrap your app in the Provider component, passing it the redux `store` and falcor `model`:
+1. wrap your app in the Provider component, passing it the redux `store` and falcor `model`:
 
 ```javascript
 import { render }             from 'react-dom';
@@ -43,7 +43,7 @@ render((
 ), document.getElementById('app'));
 ```
 
-* wrap your component in the connect component, passing it a `paths` property, similar to react-redux, optional `mapStateToProps` and `mapUpdateToProps` functions.
+2. wrap your component in the connect component, passing it a `paths` property, similar to react-redux, optional `mapStateToProps` and `mapUpdateToProps` functions.
 
 ```javascript
 import React                 from 'react';
@@ -125,7 +125,7 @@ Falcor Provider tracks the shape of the app's falcor graph by collapsing all pat
 ]
 ```
 
-This collapsed list of pathSets is stored in the redux store under the `falcor.paths` keys, and is updated interanlly via the `falcor-provider/UPDATE_PATHS` action.  This makes retrieving the graph's current expanded state as easy as:
+This collapsed list of pathSets is stored in the redux store under the `falcor.paths` keys, and is updated internally via the `falcor-provider/UPDATE_PATHS` action.  This makes retrieving the graph's current expanded state as easy as:
 
 ```javascript
 falcor.get(store.getState().falcor.props);
