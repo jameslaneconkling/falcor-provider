@@ -1,6 +1,6 @@
-import {
+import React,
+{
   Component,
-  PropTypes,
   Children
 }              from 'react';
 import R       from 'ramda';
@@ -66,16 +66,16 @@ class FalcorProvider extends Component {
 };
 
 FalcorProvider.childContextTypes = {
-  falcor: PropTypes.object,
-  componentPathMap: PropTypes.object,
-  updatePaths: PropTypes.func,
-  removePaths: PropTypes.func,
-  updateGraph: PropTypes.func
+  falcor: React.PropTypes.object,
+  componentPathMap: React.PropTypes.object,
+  updatePaths: React.PropTypes.func,
+  removePaths: React.PropTypes.func,
+  updateGraph: React.PropTypes.func
 };
 
 FalcorProvider.propTypes = {
-  falcor: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  falcor: React.PropTypes.object.isRequired,
+  store: React.PropTypes.object.isRequired
 };
 
 export default FalcorProvider;

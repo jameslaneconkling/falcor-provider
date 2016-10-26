@@ -1,6 +1,5 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 }                         from 'react';
 import { connect }        from 'react-redux';
 
@@ -50,12 +49,12 @@ export default (
     };
 
     FalcorConnect.contextTypes = {
-      store: PropTypes.object,
-      falcor: PropTypes.object,
-      componentPathMap: PropTypes.object,
-      updatePaths: PropTypes.func,
-      removePaths: PropTypes.func,
-      updateGraph: PropTypes.func
+      store: React.PropTypes.object,
+      falcor: React.PropTypes.object,
+      componentPathMap: React.PropTypes.object,
+      updatePaths: React.PropTypes.func,
+      removePaths: React.PropTypes.func,
+      updateGraph: React.PropTypes.func
     };
 
     return connect(mapStateToProps, {})(FalcorConnect);
