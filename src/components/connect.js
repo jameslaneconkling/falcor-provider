@@ -35,16 +35,17 @@ export default (
       }
 
       render() {
-        return React.createElement(WrappedComponent, Object.assign(
-          {},
-          this.props,
-          mapUpdateToProps(this.context.store.dispatch, this.context.updateGraph()),
-          {
-            updatePaths: this.updatePaths.bind(this),
-            falcor: this.context.falcor,
-            paths: this.context.componentPathMap[this._id]
-          }
-        ), this.props.children);
+        return (
+          <WrappedComponent
+            {...this.props}
+            {...mapUpdateToProps(this.context.store.dispatch, this.context.updateGraph())}
+            updatePaths={this.updatePaths.bind(this)}
+            falcor={this.context.falcor}
+            paths={this.context.componentPathMap[this._id]}
+          >
+            {this.props.children}
+          </WrappedComponent>
+        );
       }
     };
 
