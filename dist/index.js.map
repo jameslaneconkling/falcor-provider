@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.js"],"names":["default"],"mappings":";;;;;;;;;;;4CAASA,O;;;;;;;;;6CACAA,O;;;;;;;;;4CACAA,O","file":"index.js","sourcesContent":["export { default as reducer } from './components/reducer';\nexport { default as Provider } from './components/provider';\nexport { default as connect } from './components/connect';\n"]}
