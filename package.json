@@ -1,6 +1,6 @@
 {
   "name": "falcor-provider",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Redux provider to connect your falcor graph to your redux store",
   "main": "dist/index.js",
   "directories": {
