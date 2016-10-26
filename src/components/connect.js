@@ -2,11 +2,15 @@ import React, {
   Component,
   PropTypes
 }                         from 'react';
-import hoistStatics       from 'hoist-non-react-statics';
+import { connect }        from 'react-redux';
 
 let id = 0;
 
-export default (paths) => {
+export default (
+  paths,
+  mapStateToProps,
+  mapUpdateToProps = (dispatch, $updateGraph) => ({dispatch, $updateGraph})
+) => {
   return (WrappedComponent) => {
     class FalcorConnect extends Component {
       constructor() {
@@ -22,6 +26,7 @@ export default (paths) => {
         this.removePaths();
       }
 
+      // TODO - paths should be optional
       updatePaths(paths) {
         this.context.updatePaths(this._id, paths);
       }
@@ -31,22 +36,28 @@ export default (paths) => {
       }
 
       render() {
-        return (
-          <WrappedComponent
-            {...this.props}
-            falcor={this.context.falcor}
-            paths={paths}
-          />
-        );
+        return React.createElement(WrappedComponent, Object.assign(
+          {},
+          this.props,
+          mapUpdateToProps(this.context.store.dispatch, this.context.updateGraph()),
+          {
+            updatePaths: this.updatePaths.bind(this),
+            falcor: this.context.falcor,
+            paths: this.context.componentPathMap[this._id]
+          }
+        ), this.props.children);
       }
     };
 
     FalcorConnect.contextTypes = {
+      store: PropTypes.object,
       falcor: PropTypes.object,
+      componentPathMap: PropTypes.object,
       updatePaths: PropTypes.func,
-      removePaths: PropTypes.func
+      removePaths: PropTypes.func,
+      updateGraph: PropTypes.func
     };
 
-    return hoistStatics(FalcorConnect, WrappedComponent);
+    return connect(mapStateToProps, {})(FalcorConnect);
   };
 };

@@ -13,45 +13,29 @@ const collapsePathMap = R.compose(
   R.values
 );
 
-
 class FalcorProvider extends Component {
   constructor() {
     super(...arguments);
     this._componentPathMap = {};
-    const {falcor, store} = this.props;
-    const originalOnChange = falcor._root.onChange || noop;
-
-    falcor._root.onChange = () => {
-      console.log('provider update graph');
-      originalOnChange();
-
-      // TODO - expose subscribe method to all connected components?  and dispose of it automatically?
-      falcor.get(...collapsePathMap(this._componentPathMap))
-        .subscribe(res => {
-          store.dispatch({
-            type: 'falcor-provider/UPDATE_GRAPH',
-            jsonGraph: res.json
-          });
-        });
-    }
   }
 
   getChildContext() {
     return {
       falcor: this.props.falcor,
+      componentPathMap: this._componentPathMap,
       updatePaths: this.updatePaths.bind(this),
-      removePaths: this.removePaths.bind(this)
+      removePaths: this.removePaths.bind(this),
+      updateGraph: this.updateGraph.bind(this)
     };
   }
 
   updatePaths(id, paths) {
-    this._componentPathMap = Object.assign({}, this._componentPathMap, {id: paths});
+    this._componentPathMap[id] = paths;
     this.persistPaths2Store(collapsePathMap(this._componentPathMap));
   }
 
   removePaths(id) {
-    // TODO - better to just mutate paths w/ delete?
-    this._componentPathMap = Object.assign({}, this._componentPathMap, {id: null});
+    delete this._componentPathMap[id];
     this.persistPaths2Store(collapsePathMap(this._componentPathMap));
   }
 
@@ -63,7 +47,17 @@ class FalcorProvider extends Component {
       paths: paths
     });
 
-    falcor.get(...paths).subscribe();
+    this.updateGraph().subscribe();
+  }
+
+  updateGraph() {
+    const {falcor, store} = this.props;
+
+    return falcor.get(...collapsePathMap(this._componentPathMap))
+      .tapOnNext(res => store.dispatch({
+        type: 'falcor-provider/UPDATE_GRAPH',
+        jsonGraph: res.json
+      }));
   }
 
   render() {
@@ -73,8 +67,10 @@ class FalcorProvider extends Component {
 
 FalcorProvider.childContextTypes = {
   falcor: PropTypes.object,
+  componentPathMap: PropTypes.object,
   updatePaths: PropTypes.func,
-  removePaths: PropTypes.func
+  removePaths: PropTypes.func,
+  updateGraph: PropTypes.func
 };
 
 FalcorProvider.propTypes = {
