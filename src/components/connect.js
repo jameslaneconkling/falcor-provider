@@ -40,7 +40,6 @@ export default (
             {...this.props}
             {...mapUpdateToProps(this.context.store.dispatch, this.context.falcor, this.context.updateGraph())}
             updatePaths={this.updatePaths.bind(this)}
-            falcor={this.context.falcor}
             paths={this.context.componentPathMap[this._id]}
           >
             {this.props.children}
