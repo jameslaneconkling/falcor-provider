@@ -1,18 +1,21 @@
-const initialState = {
-  paths: [],
-  jsonGraph: {}
-};
-
-export default (state = initialState, action) => {
+export default (
+  state = {
+    paths: [],
+    jsonGraph: {}
+  },
+  action
+) => {
   switch (action.type) {
     case 'falcor-provider/UPDATE_PATHS':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         paths: action.paths
-      });
+      };
     case 'falcor-provider/UPDATE_GRAPH':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         jsonGraph: action.jsonGraph
-      });
+      };
     default:
       return state;
   }
