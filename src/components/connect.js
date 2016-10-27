@@ -8,7 +8,7 @@ let id = 0;
 export default (
   paths,
   mapStateToProps,
-  mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({dispatch, falcor, $updateGraph})
+  mapUpdateToProps = (dispatch, falcor, updateGraph$) => ({dispatch, falcor, updateGraph$})
 ) => {
   return (WrappedComponent) => {
     class FalcorConnect extends Component {

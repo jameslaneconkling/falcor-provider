@@ -86,7 +86,7 @@ const mapStateToProps = state => ({
   folderListLength: state.falcor.jsonGraph ? state.falcor.jsonGraph.folderList : []
 });
 
-const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
+const mapUpdateToProps = (dispatch, falcor, updateGraph$) => ({
   deleteFolder: (folderId) => {
     dispatch({type: 'DELETE_FOLDER_REQUEST', value: folderId})
 
@@ -95,7 +95,7 @@ const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
       .tapOnCompleted(() => {
         falcor.invalidate(['folderList']);
       })
-      .concat($updateGraph)
+      .concat(updateGraph$)
       .subscribe(() => {}, err => {
         dispatch({type: 'DELETE_FOLDER_ERROR', message: err});
       }, () => {
@@ -111,7 +111,7 @@ export default falcorConnect(
 )(FolderListContainer);
 ```
 
-Internally, falcor connect wraps redux connect, so `mapStateToProps` should work exactly as it does with redux connect.  `mapUpdateToProps` works like react-redux's `mapDispatchToProps`, except it passes additional `falcor` and `$updateGraph` properties (explained below).
+Internally, falcor connect wraps redux connect, so `mapStateToProps` should work exactly as it does with redux connect.  `mapUpdateToProps` works like react-redux's `mapDispatchToProps`, except it passes additional `falcor` and `updateGraph$` properties (explained below).
 
 
 ## Component Paths
@@ -146,12 +146,12 @@ paginateList() {
 
 ## List Invalidation
 
-Because falcor `CREATE` and `DELETE` calls often leave the falcor cache in a temporarily inconsistent state, Falcor Provider exposes a mechanism to manually refresh the app.  For example, if the falcor router response to a resource `DELETE` call does not automatically invalidate or replace all lists that that resource appears in, the graph will be in an inconsistent state until the client manually handles the list invalidation.  The `$updateGraph` third argument to `mapUpdateToProps` is a cold observable stream that will update the store with falcor graph's current expanded state when subscribed to, after resolving invalidations.
+Because falcor `CREATE` and `DELETE` calls often leave the falcor cache in a temporarily inconsistent state, Falcor Provider exposes a mechanism to manually refresh the app.  For example, if the falcor router response to a resource `DELETE` call does not automatically invalidate or replace all lists that that resource appears in, the graph will be in an inconsistent state until the client manually handles the list invalidation.  The `updateGraph$` third argument to `mapUpdateToProps` is a cold observable stream that will update the store with falcor graph's current expanded state when subscribed to, after resolving invalidations.
 
 For example, the following action creator will delete a resource, invalidate the list it depended on, and only update the falcor store once the app returns to a consistent state:
 
 ```javascript
-const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
+const mapUpdateToProps = (dispatch, falcor, updateGraph$) => ({
   deleteFolder: (folderId) => {
     dispatch({type: 'DELETE_FOLDER_REQUEST', value: folderId})
 
@@ -160,7 +160,7 @@ const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
       .tapOnCompleted(() => {
         falcor.invalidate(['folderList']);
       })
-      .concat($updateGraph)
+      .concat(updateGraph$)
       .subscribe(() => {}, err => {
         dispatch({type: 'DELETE_FOLDER_ERROR', message: err});
       }, () => {
@@ -173,7 +173,7 @@ const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
 Or, if you prefer to work with promises:
 
 ```javascript
-const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
+const mapUpdateToProps = (dispatch, falcor, updateGraph$) => ({
   deleteFolder: (folderId) => {
     dispatch({type: 'DELETE_FOLDER_REQUEST', value: folderId})
 
@@ -184,7 +184,7 @@ const mapUpdateToProps = (dispatch, falcor, $updateGraph) => ({
         falcor.invalidate(['folderList']);
 
         // update graph
-        return $updateGraph.toPromise();
+        return updateGraph$.toPromise();
       })
       .then(() => {
         dispatch({type: 'DELETE_FOLDER_SUCCESS', value: folderId});
