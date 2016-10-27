@@ -82,8 +82,8 @@ const paths = [
 ];
 
 const mapStateToProps = state => ({
-  folderList: state.falcor.jsonGraph ? state.falcor.jsonGraph.folderList.length : null,
-  folderListLength: state.falcor.jsonGraph ? state.falcor.jsonGraph.folderList : []
+  folderList: state.falcor.jsonGraph.folderList ? state.falcor.jsonGraph.folderList.length : null,
+  folderListLength: state.falcor.jsonGraph.folderList ? state.falcor.jsonGraph.folderList : []
 });
 
 const mapUpdateToProps = (dispatch, falcor, updateGraph$) => ({
