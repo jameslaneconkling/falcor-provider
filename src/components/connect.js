@@ -46,7 +46,7 @@ export default (
           </WrappedComponent>
         );
       }
-    };
+    }
 
     FalcorConnect.contextTypes = {
       store: React.PropTypes.object,

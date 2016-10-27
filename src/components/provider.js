@@ -5,7 +5,6 @@ import React,
 }              from 'react';
 import R       from 'ramda';
 
-const noop = () => {};
 // todo falcor_utils.collapse
 const collapsePathMap = R.compose(
   R.unnest,
@@ -41,7 +40,7 @@ class FalcorProvider extends Component {
 
   persistPaths2Store(paths) {
     // TODO - debounce
-    const {falcor, store} = this.props;
+    const {store} = this.props;
     store.dispatch({
       type: 'falcor-provider/UPDATE_PATHS',
       paths: paths
@@ -63,7 +62,7 @@ class FalcorProvider extends Component {
   render() {
     return Children.only(this.props.children);
   }
-};
+}
 
 FalcorProvider.childContextTypes = {
   falcor: React.PropTypes.object,
